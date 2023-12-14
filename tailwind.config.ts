@@ -19,6 +19,9 @@ const config: Config = {
         purple: "#B63E96",
         cyan: "#57E2D5",
       },
+      cursor: {
+        "primary-dark": "url('/cursor-dark.png'}) auto",
+      },
     },
   },
   plugins: [],

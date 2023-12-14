@@ -1,15 +1,15 @@
+import CursorFollower from "@/components/ui/cursor";
 import Navbar from "@/components/ui/navbar";
+import { PortfolioContextProvider } from "@/context/PortfolioContext";
 import "@/styles/globals.css";
 import { Links, SocialLinks } from "@/types/navTypes";
 import type { AppProps } from "next/app";
-import { Montserrat } from "next/font/google";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiUpwork } from "react-icons/si";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Montreux, Montseratt } from "@/styles/fonts";
 
-const Montseratt = Montserrat({
-  weight: ["700", "500"],
-  subsets: ["latin"],
-});
 export default function App({ Component, pageProps }: AppProps) {
   const links: Links[] = [
     {
@@ -26,6 +26,11 @@ export default function App({ Component, pageProps }: AppProps) {
       id: 1,
       name: "Portfolio",
       url: "/portfolio",
+    },
+    {
+      id: 2,
+      name: "Contact",
+      url: "/contact",
     },
   ];
   const socialLinks: SocialLinks[] = [
@@ -50,11 +55,14 @@ export default function App({ Component, pageProps }: AppProps) {
     },
   ];
   return (
-    <div
-      className={`${Montseratt.className} bg-primary-light text-primary-dark `}
-    >
-      <Navbar links={links} socialLinks={socialLinks} />
-      <Component {...pageProps} />
-    </div>
+    <PortfolioContextProvider>
+      <div
+        className={`${Montreux.className}   bg-primary-light text-primary-dark `}
+      >
+        <CursorFollower />
+        <Navbar links={links} socialLinks={socialLinks} />
+        <Component {...pageProps} />
+      </div>
+    </PortfolioContextProvider>
   );
 }

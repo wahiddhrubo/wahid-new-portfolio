@@ -11,3 +11,10 @@ export type SocialLinks = {
   icon: ReactNode;
   readonly id: number;
 };
+
+export type SlideProps = {
+  title: string;
+  img: string;
+  type: "Web" | "Android";
+  description: string;
+};
