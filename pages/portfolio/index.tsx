@@ -14,7 +14,6 @@ export default function Portfolio() {
   const { scrollYProgress } = useScroll({
     target: portfolioRef,
   });
-  console.log(scrollYProgress.get());
   useEffect(() => {
     getAllWorks();
   }, []);
@@ -46,7 +45,7 @@ export default function Portfolio() {
             Web {"/>"}
           </motion.div>
           {workList?.map((s) => (
-            <Works {...s} />
+            <Works {...s} key={s._id} />
           ))}
         </div>
       </div>

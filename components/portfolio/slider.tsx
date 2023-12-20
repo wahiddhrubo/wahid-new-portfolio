@@ -35,7 +35,7 @@ export default function SliderComp({ slides }: { slides: ItemPayload[] }) {
       <AnimatePresence mode="wait">
         <Slider {...settings}>
           {slides.map((s) => (
-            <Slides {...s} />
+            <Slides {...s} key={s._id} />
           ))}
         </Slider>
       </AnimatePresence>

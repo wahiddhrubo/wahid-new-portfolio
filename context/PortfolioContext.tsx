@@ -11,12 +11,14 @@ type ContextType = {
   hoveredText: string;
   setHoveredText: (txt: string) => void;
   borderColor: string;
+  newId?: string;
   setBorderColor: (txt: string) => void;
   hamburgerColor: string;
   setHamburgerColor: (txt: string) => void;
   getPrevOrNext: (id: string, order: -1 | 1) => {};
   getAllWorks: () => {};
   getWorkById: (id: string) => {};
+  setNewId: (id: string) => void;
   currentWork?: ItemPayload | null | undefined;
   workList?: ItemPayload[] | null;
 };
@@ -35,6 +37,7 @@ export const PortfolioContext = createContext<ContextType>({
   getAllWorks: async () => {},
   getWorkById: async (id: string) => {},
   currentWork: null,
+  setNewId: (id: string) => {},
   workList: null,
 });
 type Props = {
@@ -46,6 +49,8 @@ export function PortfolioContextProvider({ children }: Props) {
   const [hoveredText, setHoveredText] = useState("View Project");
   const [borderColor, setBorderColor] = useState("View Project");
   const [hamburgerColor, setHamburgerColor] = useState("View Project");
+  const [newId, setNewId] = useState<string>();
+
   const [currentWork, setCurrentWork] = useState<
     ItemPayload | null | undefined
   >();
@@ -55,7 +60,8 @@ export function PortfolioContextProvider({ children }: Props) {
     const { data } = await axios.get(
       `${BACKEND_URL}/api/v1/${order === 1 ? "next" : "prev"}/items/${id}`
     );
-    console.log(data);
+    console.log(data.item);
+    setNewId(data.item[0]._id);
   };
   const getWorkById = async (id: string) => {
     const { data } = await axios.get(`${BACKEND_URL}/api/v1/items/${id}`);
@@ -86,6 +92,8 @@ export function PortfolioContextProvider({ children }: Props) {
         getAllWorks,
         workList,
         getWorkById,
+        newId,
+        setNewId,
       }}
     >
       {children}

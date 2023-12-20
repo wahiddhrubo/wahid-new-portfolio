@@ -54,7 +54,10 @@ export default function Works({
             setHoveredText("View Project");
             setProjectHovered(true);
           }}
-          onMouseLeave={() => setProjectHovered(false)}
+          onMouseLeave={() => {
+            setProjectHovered(false);
+            setProjectHovered(false);
+          }}
         >
           <Image
             alt=""
