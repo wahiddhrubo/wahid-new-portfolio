@@ -18,9 +18,11 @@ const config: Config = {
         "primary-light": "#F5F5F5",
         purple: "#B63E96",
         cyan: "#57E2D5",
+        "blue-dark": "#0E0C16",
       },
       cursor: {
-        "primary-dark": "url('/cursor-dark.png'}) auto",
+        "primary-dark": "url(/cursor-dark.png) auto",
+        "primary-light": "url(/cursor-light.png) auto",
       },
     },
   },

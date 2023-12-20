@@ -1,19 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Variant, Variants, motion, useScroll } from "framer-motion";
-import { Links } from "@/types/navTypes";
+import { Links } from "@/types/types";
 import Link from "next/link";
 import { PortfolioContext } from "@/context/PortfolioContext";
 import { useRouter } from "next/router";
+import { BwNista } from "@/styles/fonts";
+import { DefaultLinks } from "@/lib/constants";
 type Props = {
-  links: Links[];
+  links?: Links[];
+  color?: string;
 };
-export default function Hamburger({ links }: Props) {
-  const { setIsHovered } = useContext(PortfolioContext);
+export default function Hamburger({
+  links = DefaultLinks,
+  color = "#1b1b1b",
+}: Props) {
+  const { setIsHovered, setBorderColor, hamburgerColor } =
+    useContext(PortfolioContext);
   const route = useRouter();
   const routeLink = route.asPath;
   const [isOpen, setIsOpen] = useState(false);
   const [oldRouteLink, setOldRouteLink] = useState(routeLink);
-  console.log(oldRouteLink, routeLink);
   useEffect(() => {
     if (routeLink !== oldRouteLink) {
       setIsOpen(false);
@@ -56,18 +62,18 @@ export default function Hamburger({ links }: Props) {
   const hamburger: Variants = {
     topBar: {
       rotate: isOpen ? 45 : 0,
-      originX: 0,
+      originX: "center",
       width: 32,
-      backgroundColor: "#3b3b3b",
+      backgroundColor: isOpen ? "#1b1b1b" : hamburgerColor || color,
       transition: {
         duration: 0.2,
         ease: "easeInOut",
       },
     },
     bottomBar: {
-      backgroundColor: "#3b3b3b",
+      backgroundColor: isOpen ? "#1b1b1b" : hamburgerColor || color,
       rotate: isOpen ? -45 : 0,
-      originX: 0,
+      originX: "left",
       width: 32,
       transition: {
         duration: 0.2,
@@ -76,40 +82,50 @@ export default function Hamburger({ links }: Props) {
     },
     middleBar: {
       scale: isOpen ? 0 : 1,
+      display: isOpen ? "none" : "",
       transition: {
         duration: 0.2,
         ease: "easeInOut",
       },
     },
   };
-
+  useEffect(() => {
+    if (isOpen) {
+      setBorderColor("black");
+    }
+  }, [isOpen]);
   return (
     <motion.div>
-      <motion.div
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed right-[10vw] z-50 space-y-2 top-[10vh]"
+        className="fixed  group right-[10vw] z-[100] space-y-2 top-[10vh]"
       >
         <motion.div
           variants={hamburger}
           animate="topBar"
-          className="h-1 w-6  bg-black"
+          className={`h-1 w-6  `}
+          style={{ backgroundColor: hamburgerColor || color }}
         />
         <motion.div
           variants={hamburger}
           animate="middleBar"
-          className="h-1 w-4 bg-black ml-auto "
+          className={`h-1 w-4 group-hover:my-4  transition-all  ml-auto `}
+          style={{ backgroundColor: hamburgerColor || color }}
         />
         <motion.div
           variants={hamburger}
           animate="bottomBar"
-          className="h-1 w-6 bg-black "
+          className={`h-1 w-6  `}
+          style={{ backgroundColor: hamburgerColor || color }}
         />
-      </motion.div>
+      </div>
       <motion.div
         variants={boxAnim}
         initial="containerInitial"
         animate={isOpen ? "container" : "containerInitial"}
-        className="fixed z-50 selection:bg-primary-dark selection:text-white justify-between md:px-[20vw] py-[10vh] inset-0 w-full h-full bg-yellow-300 text-primary-dark flex gap-10 "
+        className="fixed z-[99] selection:bg-primary-dark selection:text-white justify-between md:px-[20vw] py-[10vh] inset-0 w-full h-full bg-yellow-300 text-primary-dark flex gap-10 "
       >
         <div className=" w-fit h-full grid align-middle ">
           <div className=" h-fit my-auto">
@@ -139,7 +155,7 @@ export default function Hamburger({ links }: Props) {
         </div>
         <div className="w-[55%] h-full grid align-middle space-y-8">
           <div className="space-y-8 h-fit my-auto">
-            <h2 className="font-bold w-full text-3xl">
+            <h2 className={`font-bold ${BwNista.className} w-full text-3xl`}>
               Let’s find solutions together?
             </h2>
             <div>
