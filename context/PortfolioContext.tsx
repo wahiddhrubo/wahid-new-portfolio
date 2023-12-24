@@ -67,6 +67,7 @@ export function PortfolioContextProvider({ children }: Props) {
   const getWorkById = async (id: string) => {
     const { data } = await axios.get(`${BACKEND_URL}/api/v1/items/${id}`);
     setCurrentWork(data.item);
+    setNoOfItem(data.noOfItem);
   };
   const getAllWorks = async () => {
     const { data } = await axios.get(`${BACKEND_URL}/api/v1/items`);

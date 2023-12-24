@@ -15,8 +15,14 @@ export default function Work() {
   const { getPrevOrNext, getWorkById, currentWork } =
     useContext(PortfolioContext);
   const { id } = router.query;
-  const { setBorderColor, setIsHovered, newId, setProjectHovered, setNewId } =
-    useContext(PortfolioContext);
+  const {
+    setBorderColor,
+    setIsHovered,
+    newId,
+    noOfItem,
+    setProjectHovered,
+    setNewId,
+  } = useContext(PortfolioContext);
 
   useEffect(() => {
     if (newId) {
@@ -31,6 +37,15 @@ export default function Work() {
     }
   }, [id]);
 
+  const paginate = (next: number) => {
+    if (next >= noOfItem || next <= 0) {
+      console.log(noOfItem);
+      return;
+    } else {
+      getPrevOrNext(next);
+    }
+  };
+
   return (
     <>
       {currentWork && (
@@ -40,7 +55,7 @@ export default function Work() {
         >
           <div
             onMouseEnter={() => setBorderColor("white")}
-            className="bg-blue-dark z-20 flex gap-8 flex-wrap px-[5vw] py-[5vh] fixed right-0 w-[35vw] h-screen"
+            className="bg-blue-dark overflow-y-scroll z-20 flex gap-8 flex-wrap px-[5vw] py-[5vh] fixed right-0 w-[35vw] h-screen"
           >
             <div className=" flex w-full justify-between text-3xl text-gray-500  ">
               <Link
@@ -56,7 +71,7 @@ export default function Work() {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   className="hover:text-white"
-                  onClick={() => getPrevOrNext(currentWork._id, -1)}
+                  onClick={() => paginate(currentWork.serial - 1)}
                 >
                   <HiArrowLongLeft />
                 </div>
@@ -65,7 +80,7 @@ export default function Work() {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   className="hover:text-white"
-                  onClick={() => getPrevOrNext(currentWork._id, 1)}
+                  onClick={() => paginate(currentWork.serial + 1)}
                 >
                   <HiArrowLongRight />
                 </div>
