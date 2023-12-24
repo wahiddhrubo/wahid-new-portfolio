@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Montreux, Montseratt } from "@/styles/fonts";
 import { AnimatePresence } from "framer-motion";
+import Footer from "@/components/ui/footer";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,12 +18,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <div
         className={`${Montreux.className} cursor-none  bg-primary-light text-primary-dark `}
       >
-        <AnimatePresence mode="wait">
-          <CursorFollower />
-          <Navbar />
-        </AnimatePresence>
-
+        <CursorFollower />
+        <Navbar />
         <Component {...pageProps} />
+        <Footer />
       </div>
     </PortfolioContextProvider>
   );

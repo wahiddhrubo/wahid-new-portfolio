@@ -71,6 +71,11 @@ export default function Work() {
                 </div>
               </div>
             </div>
+            <div className="flex  flex-wrap gap-2 text-gray-300 ">
+              {currentWork.technology.map((t) => (
+                <div>{"#" + t + " "}</div>
+              ))}
+            </div>
             <h2 className="text-2xl  block w-full font-semibold">
               {currentWork.title}
             </h2>
@@ -78,16 +83,24 @@ export default function Work() {
             <div className="flex w-full h-fit text-3xl mt-auto text-white justify-between content-end ">
               <div className="h-1 w-[80%] bg-white my-auto "></div>
               <div className="flex gap-3 ml-3">
-                <HiArrowTopRightOnSquare
+                <Link
+                  href={currentWork.githubLink || ""}
+                  target="_blank"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   className="hover:text-white"
-                />
-                <BsGithub
+                >
+                  <BsGithub />
+                </Link>
+                <Link
+                  href={currentWork.liveLink || ""}
+                  target="_blank"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   className="hover:text-white"
-                />
+                >
+                  <HiArrowTopRightOnSquare />
+                </Link>
               </div>
             </div>
           </div>

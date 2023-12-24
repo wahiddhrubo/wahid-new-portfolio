@@ -1,3 +1,4 @@
+import { type } from "os";
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
 
@@ -8,8 +9,13 @@ export type Links = {
 };
 export type SocialLinks = {
   url: string;
-  icon: ReactNode;
+  icon?: ReactNode;
+  name: string;
   readonly id: number;
+};
+
+export type FooterProps = {
+  social?: SocialLinks[];
 };
 
 export type SlideProps = {
@@ -34,9 +40,13 @@ export type ItemPayload = {
   title: string;
   description: string;
   type: string;
+  githubLink: string;
+  liveLink: string;
+  technology: string[];
   workType: string;
   gallery: ImageUri[];
   featuredImage: ImageUri;
+  serial: number;
   _id: string;
 };
 

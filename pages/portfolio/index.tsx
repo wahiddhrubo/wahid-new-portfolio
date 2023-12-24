@@ -11,9 +11,11 @@ export default function Portfolio() {
   const { setBorderColor, setHamburgerColor, getAllWorks, workList } =
     useContext(PortfolioContext);
   const portfolioRef = useRef(null);
+
   const { scrollYProgress } = useScroll({
     target: portfolioRef,
   });
+
   useEffect(() => {
     getAllWorks();
   }, []);
@@ -39,8 +41,8 @@ export default function Portfolio() {
             Featured Works
           </div>
           <motion.div
-            style={{ x }}
-            className={`sticky top-[35vh] w-fit text-8xl italic text-gray-300 ml-auto right-[10vw] `}
+            // style={{ x }}
+            className={`sticky top-[35vh] w-fit text-6xl italic text-gray-300 ml-auto right-[1vw] `}
           >
             Web {"/>"}
           </motion.div>

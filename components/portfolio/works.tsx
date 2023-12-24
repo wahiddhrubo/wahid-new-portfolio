@@ -7,9 +7,10 @@ import { PortfolioContext } from "@/context/PortfolioContext";
 import Link from "next/link";
 export default function Works({
   title,
-  workType,
+  type,
   featuredImage,
   _id,
+  description,
 }: ItemPayload) {
   const { setProjectHovered, setHoveredText, setIsHovered } =
     useContext(PortfolioContext);
@@ -41,7 +42,7 @@ export default function Works({
   };
 
   return (
-    <div className="h-screen flex relative hover:text-purple py-[22vh] w-fit mx-auto text-left snap-start snap-normal">
+    <div className="h-screen flex relative  py-[22vh] w-fit mx-auto text-left snap-start snap-normal">
       <motion.div
         variants={imageAmim}
         initial="hidden"
@@ -74,15 +75,23 @@ export default function Works({
           className="w-full z-5 top-0 h-full bg-blue-400  absolute left-0"
         />
       </motion.div>
-      <div className="h-full w-[45%] overflow-hidden grid content-center ">
-        <motion.h2
+      <div className="h-full w-[40%] overflow-hidden grid content-center ">
+        <Link
+          href={`/portfolio/${_id}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`${BwNista.className} my-4  font-black text-3xl`}
+          className={`${BwNista.className} my-4 hover:text-yellow-300  font-black text-3xl`}
         >
-          {title}
-          {workType}
-        </motion.h2>
+          <motion.h2>{title}</motion.h2>
+        </Link>
+        <span className="block pl-4 border-l-2 my-4 border-yellow-300">
+          {type}
+        </span>
+        <span className="block w-[80%]">
+          {description.length > 50
+            ? `${description.slice(0, 100)}...`
+            : description}
+        </span>
       </div>
     </div>
   );

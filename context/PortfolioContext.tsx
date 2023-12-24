@@ -15,12 +15,13 @@ type ContextType = {
   setBorderColor: (txt: string) => void;
   hamburgerColor: string;
   setHamburgerColor: (txt: string) => void;
-  getPrevOrNext: (id: string, order: -1 | 1) => {};
+  getPrevOrNext: (serial: number) => {};
   getAllWorks: () => {};
   getWorkById: (id: string) => {};
   setNewId: (id: string) => void;
   currentWork?: ItemPayload | null | undefined;
   workList?: ItemPayload[] | null;
+  noOfItem: number;
 };
 export const PortfolioContext = createContext<ContextType>({
   isHovered: false,
@@ -33,12 +34,13 @@ export const PortfolioContext = createContext<ContextType>({
   setBorderColor: (txt: string) => {},
   hamburgerColor: "",
   setHamburgerColor: (txt: string) => {},
-  getPrevOrNext: async (id: string, order: -1 | 1) => {},
+  getPrevOrNext: async (serial: number) => {},
   getAllWorks: async () => {},
   getWorkById: async (id: string) => {},
   currentWork: null,
   setNewId: (id: string) => {},
   workList: null,
+  noOfItem: 1,
 });
 type Props = {
   children: string | JSX.Element | JSX.Element[] | ReactNode;
@@ -50,18 +52,17 @@ export function PortfolioContextProvider({ children }: Props) {
   const [borderColor, setBorderColor] = useState("View Project");
   const [hamburgerColor, setHamburgerColor] = useState("View Project");
   const [newId, setNewId] = useState<string>();
+  const [noOfItem, setNoOfItem] = useState<number>(1);
 
   const [currentWork, setCurrentWork] = useState<
     ItemPayload | null | undefined
   >();
   const [workList, setWorkList] = useState<ItemPayload[]>();
 
-  const getPrevOrNext = async (id: string, order: 1 | -1) => {
-    const { data } = await axios.get(
-      `${BACKEND_URL}/api/v1/${order === 1 ? "next" : "prev"}/items/${id}`
-    );
-    console.log(data.item);
+  const getPrevOrNext = async (serial: number) => {
+    const { data } = await axios.get(`${BACKEND_URL}/api/v1/next/${serial}`);
     setNewId(data.item[0]._id);
+    setNoOfItem(data.noOfItem);
   };
   const getWorkById = async (id: string) => {
     const { data } = await axios.get(`${BACKEND_URL}/api/v1/items/${id}`);
@@ -94,6 +95,7 @@ export function PortfolioContextProvider({ children }: Props) {
         getWorkById,
         newId,
         setNewId,
+        noOfItem,
       }}
     >
       {children}

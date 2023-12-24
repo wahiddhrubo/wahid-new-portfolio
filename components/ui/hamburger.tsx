@@ -164,6 +164,8 @@ export default function Hamburger({
             </div>
             <a
               href="mailto:wahidhrubo@gmail.com"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
               className="hover:font-bold text-lg block hover:tracking-[4px] transition-all duration-200 se"
             >
               Wahiddhrubo(a)gmail.com{" "}
